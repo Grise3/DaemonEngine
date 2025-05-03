@@ -202,6 +202,17 @@ const std::unordered_map<Str::StringRef, keyNum_t, Str::IHash, Str::IEqual> keyn
 	{ "CONTROLLER_DPAD_RIGHT",     keyNum_t::K_CONTROLLER_DPAD_RIGHT     },
 	{ "CONTROLLER_DPAD_DOWN",      keyNum_t::K_CONTROLLER_DPAD_DOWN      },
 	{ "CONTROLLER_DPAD_LEFT",      keyNum_t::K_CONTROLLER_DPAD_LEFT      },
+
+	{ "RIGHT_STICK_UP",            keyNum_t::K_RIGHT_STICK_UP            },
+	{ "RIGHT_STICK_DOWN",          keyNum_t::K_RIGHT_STICK_DOWN          },
+	{ "RIGHT_STICK_LEFT",          keyNum_t::K_RIGHT_STICK_LEFT          },
+	{ "RIGHT_STICK_RIGHT",         keyNum_t::K_RIGHT_STICK_RIGHT         },
+
+	{ "LEFT_STICK_UP",             keyNum_t::K_LEFT_STICK_UP             },
+	{ "LEFT_STICK_DOWN",           keyNum_t::K_LEFT_STICK_DOWN           },
+	{ "LEFT_STICK_LEFT",           keyNum_t::K_LEFT_STICK_LEFT           },
+	{ "LEFT_STICK_RIGHT",          keyNum_t::K_LEFT_STICK_RIGHT          },
+
 };
 
 const std::unordered_map<char, Str::StringRef> SPECIAL_CHARACTER_NAMES {

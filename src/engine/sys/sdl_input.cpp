@@ -546,7 +546,7 @@ struct
 	bool buttons[ 32 ];
 
 	static_assert(ARRAY_LEN(buttons) >= K_CONTROLLER_MAX - K_CONTROLLER_A, "not enough buttons for IN_GameControllerMove");
-
+	bool buttons_virtual[MAX_KEYS];
 	unsigned int oldaxes;
 	int          oldaaxes[ 16 ];
 	unsigned int oldhats;
@@ -1039,18 +1039,147 @@ static void IN_GameControllerMove()
 			stick_state.buttons[ i ] = pressed;
 		}
 	}
+	const int DEADZONE = 8000;
 
-	// use left stick for strafing
-	IN_GameControllerAxis( SDL_CONTROLLER_AXIS_LEFTX, joystickAxis_t::AXIS_SIDE, 127 );
-	IN_GameControllerAxis( SDL_CONTROLLER_AXIS_LEFTY, joystickAxis_t::AXIS_FORWARD, -127 );
+	Sint16 axisRightY = SDL_GameControllerGetAxis(gamepad, SDL_CONTROLLER_AXIS_RIGHTY);
+	if (axisRightY < -DEADZONE)
+	{
+		if (!stick_state.buttons_virtual[K_RIGHT_STICK_UP])
+		{
+			QueueKeyEvent(K_RIGHT_STICK_UP, true);
+			stick_state.buttons_virtual[K_RIGHT_STICK_UP] = true;
+		}
+	}
+	else
+	{
+		if (stick_state.buttons_virtual[K_RIGHT_STICK_UP])
+		{
+			QueueKeyEvent(K_RIGHT_STICK_UP, false);
+			stick_state.buttons_virtual[K_RIGHT_STICK_UP] = false;
+		}
+	}
 
-	// use right stick for viewing
-	IN_GameControllerAxis( SDL_CONTROLLER_AXIS_RIGHTX, joystickAxis_t::AXIS_YAW, -127 );
-	IN_GameControllerAxis( SDL_CONTROLLER_AXIS_RIGHTY, joystickAxis_t::AXIS_PITCH, 127 );
+	if (axisRightY > DEADZONE)
+	{
+		if (!stick_state.buttons_virtual[K_RIGHT_STICK_DOWN])
+		{
+			QueueKeyEvent(K_RIGHT_STICK_DOWN, true);
+			stick_state.buttons_virtual[K_RIGHT_STICK_DOWN] = true;
+		}
+	}
+	else
+	{
+		if (stick_state.buttons_virtual[K_RIGHT_STICK_DOWN])
+		{
+			QueueKeyEvent(K_RIGHT_STICK_DOWN, false);
+			stick_state.buttons_virtual[K_RIGHT_STICK_DOWN] = false;
+		}
+	}
 
-	axes |= IN_GameControllerAxisToButton( SDL_CONTROLLER_AXIS_TRIGGERLEFT, K_CONTROLLER_LT );
-	axes |= IN_GameControllerAxisToButton( SDL_CONTROLLER_AXIS_TRIGGERRIGHT, K_CONTROLLER_RT );
+	Sint16 axisRightX = SDL_GameControllerGetAxis(gamepad, SDL_CONTROLLER_AXIS_RIGHTX);
+	if (axisRightX < -DEADZONE)
+	{
+		if (!stick_state.buttons_virtual[K_RIGHT_STICK_LEFT])
+		{
+			QueueKeyEvent(K_RIGHT_STICK_LEFT, true);
+			stick_state.buttons_virtual[K_RIGHT_STICK_LEFT] = true;
+		}
+	}
+	else
+	{
+		if (stick_state.buttons_virtual[K_RIGHT_STICK_LEFT])
+		{
+			QueueKeyEvent(K_RIGHT_STICK_LEFT, false);
+			stick_state.buttons_virtual[K_RIGHT_STICK_LEFT] = false;
+		}
+	}
 
+	if (axisRightX > DEADZONE)
+	{
+		if (!stick_state.buttons_virtual[K_RIGHT_STICK_RIGHT])
+		{
+			QueueKeyEvent(K_RIGHT_STICK_RIGHT, true);
+			stick_state.buttons_virtual[K_RIGHT_STICK_RIGHT] = true;
+		}
+	}
+	else
+	{
+		if (stick_state.buttons_virtual[K_RIGHT_STICK_RIGHT])
+		{
+			QueueKeyEvent(K_RIGHT_STICK_RIGHT, false);
+			stick_state.buttons_virtual[K_RIGHT_STICK_RIGHT] = false;
+		}
+	}
+
+	Sint16 axisLeftY = SDL_GameControllerGetAxis(gamepad, SDL_CONTROLLER_AXIS_LEFTY);
+	if (axisLeftY < -DEADZONE)
+	{
+		if (!stick_state.buttons_virtual[K_LEFT_STICK_UP])
+		{
+			QueueKeyEvent(K_LEFT_STICK_UP, true);
+			stick_state.buttons_virtual[K_LEFT_STICK_UP] = true;
+		}
+	}
+	else
+	{
+		if (stick_state.buttons_virtual[K_LEFT_STICK_UP])
+		{
+			QueueKeyEvent(K_LEFT_STICK_UP, false);
+			stick_state.buttons_virtual[K_LEFT_STICK_UP] = false;
+		}
+	}
+
+	if (axisLeftY > DEADZONE)
+	{
+		if (!stick_state.buttons_virtual[K_LEFT_STICK_DOWN])
+		{
+			QueueKeyEvent(K_LEFT_STICK_DOWN, true);
+			stick_state.buttons_virtual[K_LEFT_STICK_DOWN] = true;
+		}
+	}
+	else
+	{
+		if (stick_state.buttons_virtual[K_LEFT_STICK_DOWN])
+		{
+			QueueKeyEvent(K_LEFT_STICK_DOWN, false);
+			stick_state.buttons_virtual[K_LEFT_STICK_DOWN] = false;
+		}
+	}
+
+	Sint16 axisLeftX = SDL_GameControllerGetAxis(gamepad, SDL_CONTROLLER_AXIS_LEFTX);
+	if (axisLeftX < -DEADZONE)
+	{
+		if (!stick_state.buttons_virtual[K_LEFT_STICK_LEFT])
+		{
+			QueueKeyEvent(K_LEFT_STICK_LEFT, true);
+			stick_state.buttons_virtual[K_LEFT_STICK_LEFT] = true;
+		}
+	}
+	else
+	{
+		if (stick_state.buttons_virtual[K_LEFT_STICK_LEFT])
+		{
+			QueueKeyEvent(K_LEFT_STICK_LEFT, false);
+			stick_state.buttons_virtual[K_LEFT_STICK_LEFT] = false;
+		}
+	}
+
+	if (axisLeftX > DEADZONE)
+	{
+		if (!stick_state.buttons_virtual[K_LEFT_STICK_RIGHT])
+		{
+			QueueKeyEvent(K_LEFT_STICK_RIGHT, true);
+			stick_state.buttons_virtual[K_LEFT_STICK_RIGHT] = true;
+		}
+	}
+	else
+	{
+		if (stick_state.buttons_virtual[K_LEFT_STICK_RIGHT])
+		{
+			QueueKeyEvent(K_LEFT_STICK_RIGHT, false);
+			stick_state.buttons_virtual[K_LEFT_STICK_RIGHT] = false;
+		}
+	}
 	/* Save for future generations. */
 	stick_state.oldaxes = axes;
 }

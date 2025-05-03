@@ -498,8 +498,8 @@ void CL_GameControllerMove( usercmd_t *cmd )
 		anglespeed = 0.001f * cls.frametime;
 	}
 
-	cl.viewangles[ PITCH ] += anglespeed * cl_pitchspeed->value * ( cl.joystickAxis[ Util::ordinal(joystickAxis_t::AXIS_PITCH) ] / 127.0f );
-	cl.viewangles[ YAW ] += anglespeed * cl_yawspeed->value * ( cl.joystickAxis[ Util::ordinal(joystickAxis_t::AXIS_YAW) ] / 127.0f );
+	cl.viewangles[ PITCH ] += anglespeed * cl_pitchspeed->value * cl_controllersensitivity->value * ( cl.joystickAxis[ Util::ordinal(joystickAxis_t::AXIS_PITCH) ] / 127.0f );
+	cl.viewangles[ YAW ] += anglespeed * cl_yawspeed->value * cl_controllersensitivity->value * ( cl.joystickAxis[ Util::ordinal(joystickAxis_t::AXIS_YAW) ] / 127.0f );
 
 	cmd->rightmove = ClampChar( cmd->rightmove + cl.joystickAxis[ Util::ordinal(joystickAxis_t::AXIS_SIDE) ] );
 	cmd->forwardmove = ClampChar( cmd->forwardmove + cl.joystickAxis[ Util::ordinal(joystickAxis_t::AXIS_FORWARD) ] );

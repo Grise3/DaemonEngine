@@ -95,6 +95,7 @@ cvar_t *cl_aviFrameRate;
 
 cvar_t *cl_freelook;
 cvar_t *cl_sensitivity;
+cvar_t *cl_controllersensitivity;
 cvar_t *cl_gameControllerAvailable;
 
 cvar_t *cl_mouseAccelOffset;
@@ -2333,6 +2334,8 @@ void CL_Init()
 
 	cl_run = Cvar_Get( "cl_run", "1", 0 );
 	cl_sensitivity = Cvar_Get( "sensitivity", "5", CVAR_ARCHIVE );
+	cl_controllersensitivity = Cvar_Get( "controllersensitivity", "1.5", CVAR_ARCHIVE );
+
 	cl_mouseAccel = Cvar_Get( "cl_mouseAccel", "0", 0 );
 	cl_freelook = Cvar_Get( "cl_freelook", "1", CVAR_ARCHIVE );
 
